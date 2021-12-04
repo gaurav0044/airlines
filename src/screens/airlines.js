@@ -32,34 +32,38 @@ class Airlines extends React.Component {
   async getList(pageNo) {
     const {list} = this.state;
     this.setLoader(true);
-    const {data} = await ApiCaller.getList(pageNo);
-    console.log(data,"check resopnse");
-    const newList = list.concat(data)
-    this.setState({
-      list: newList,
-    },()=>{
-      console.log("List log:",this.state.list)
-    });
-    this.setLoader(false);
+    try {
+      const {data} = await ApiCaller.getList(pageNo);
+      console.log(data, 'check resopnse');
+      const newList = list.concat(data);
+      this.setState({
+        list: newList,
+      });
+      this.setLoader(false);
+    } catch (error) {
+      alert('Something went wrong.');
+    }
   }
 
-  renderList = ({item, index}) => <Card  ref={ref=this.ref=ref} item={item} navigation={this.props.navigation}/>;
+  renderList = ({item, index}) => (
+    <Card item={item} navigation={this.props.navigation} />
+  );
 
   render() {
     const {loading, list} = this.state;
-    console.log(list,"checking list")
+    console.log(list, 'checking list');
     return (
       <SafeAreaView style={styles.container}>
-        <FlatList 
-          data={list} 
-          renderItem={this.renderList} 
-          onEndReached={()=>{
-            this.page+=1;
+        <FlatList
+          data={list}
+          renderItem={this.renderList}
+          onEndReached={() => {
+            this.page += 1;
             this.getList(this.page);
           }}
           onEndReachedThreshold={0.5}
         />
-        
+
         {loading && (
           <ActivityIndicator
             style={{

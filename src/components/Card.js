@@ -15,7 +15,6 @@ class Card extends React.PureComponent {
         })}
         >
         <Image
-          ref={ref=this.ref=ref}
           source={{
             uri: item?.airline[0]?.logo,
           }}
