@@ -49,6 +49,10 @@ class Airlines extends React.Component {
     <Card item={item} navigation={this.props.navigation} />
   );
 
+  reachedToEnd = () => {
+    this.page += 1;
+    this.getList(this.page);
+  };
   render() {
     const {loading, list} = this.state;
     console.log(list, 'checking list');
@@ -57,13 +61,9 @@ class Airlines extends React.Component {
         <FlatList
           data={list}
           renderItem={this.renderList}
-          onEndReached={() => {
-            this.page += 1;
-            this.getList(this.page);
-          }}
+          onEndReached={this.reachedToEnd}
           onEndReachedThreshold={0.5}
         />
-
         {loading && (
           <ActivityIndicator
             style={{
