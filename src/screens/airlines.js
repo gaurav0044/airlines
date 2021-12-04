@@ -43,7 +43,7 @@ class Airlines extends React.Component {
     this.setLoader(false);
   }
 
-  renderList = ({item, index}) => <Card item={item} navigation={this.props.navigation}/>;
+  renderList = ({item, index}) => <Card  ref={ref=this.ref=ref} item={item} navigation={this.props.navigation}/>;
 
   render() {
     const {loading, list} = this.state;
